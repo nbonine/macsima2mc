@@ -54,7 +54,7 @@ def macsima_pattern(version=1):
             "roi"           : r"_ROI-(\d+)",
             "tile"          : r"_F-(\d+)",
             "exposure_time" : r"_EXP-(\d+(?:\.\d+)?)",
-            "marker"        : r"_A-(.*?)_",
+            "marker"        : r"_A-(.*?)_C-",
             "filter"        : r"_D-(.*?)_"
             }
         
