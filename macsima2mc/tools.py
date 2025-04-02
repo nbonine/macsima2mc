@@ -182,8 +182,8 @@ def cast_stack_name(cycle_no,
     Returns:
         str: name of the stack file.
     """
-    markers='__'.join([element[0] for element in marker_filter_map ])
-    filters='__'.join([element[1] for element in marker_filter_map ])
+    markers='__'.join([element[0].replace("_","-") for element in marker_filter_map ])
+    filters='__'.join([element[1].replace("_","-") for element in marker_filter_map ])
     cycle_no = int(cycle_no)
 
     c = f'{cycle_no:03d}'
