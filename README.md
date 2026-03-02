@@ -43,11 +43,11 @@ pip install macsima2mc
 ### download container:
 - Docker
 ```
-docker pull ghcr.io/schapirolabor/macsima2mc:v1.12.15
+docker pull ghcr.io/schapirolabor/macsima2mc:v1.2.15
 ```
 - Singularity
 ```
-singularity pull docker://ghcr.io/schapirolabor/macsima2mc:v1.12.15
+singularity pull docker://ghcr.io/schapirolabor/macsima2mc:v1.2.15
 ```
 ### Script execution
 
