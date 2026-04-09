@@ -106,11 +106,21 @@ def cycle_info(cycle_path,
         info[feat]=extract_values(target_pattern=value, strings=file_names,number_cast=False)
 
     df = pd.DataFrame(info)
+
+    df["exposure_time"] = df["exposure_time"].str.rstrip('.') #Cleanup: strip trailing dots from regex capture so float conversion works
+
+    # 2. Robustness: handle missing cycle/marker tags (like in Scan2 or DAPI files)
+    if 'cycle' not in df.columns: df['cycle'] = 0
+    if 'marker' not in df.columns: df['marker'] = df['filter']
+    df['marker'] = df['marker'].fillna(df['filter'])
+    df['cycle'] = df['cycle'].fillna(0)
+
     df.loc[df['filter']==ref_marker,'marker'] = ref_marker
 
     df.insert(loc=df.shape[1], column="exposure_level", value=0)
     df["exposure_time"] = df["exposure_time"].astype(float)
-    df["exposure_level"] = ( df.groupby(["source","marker","filter"])["exposure_time"].rank(method="dense")).astype(int)
+    # 3. Dense rank starts at 1. Subtract 1 if you want the exp-0, exp-1 format.
+    df["exposure_level"] = (df.groupby(["source","marker","filter"])["exposure_time"].rank(method="dense")).astype(int)
 
     return df
 

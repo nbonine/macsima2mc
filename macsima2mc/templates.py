@@ -47,15 +47,15 @@ def macsima_pattern(version=1):
     elif version==2:
 
         pattern = {
-            "cycle"         : r"CYC-(\d+)",
+            "cycle"         : r"(?:CYC-(\d+)_)?",
             "source"        : r"_ST-(.*?)_",
             "rack"          : r"_R-(\d+)",
             "well"          : r"_W-(.*?\d+)",
             "roi"           : r"_ROI-(\d+)",
             "tile"          : r"_F-(\d+)",
-            "exposure_time" : r"_EXP-(\d+(?:\.\d+)?)",
-            "marker"        : r"_A-(.*?)_",
-            "filter"        : r"_D-(.*?)_"
+            "exposure_time" : r"_EXP-([\d\.]+)",
+            "marker"        : r"_A-(.*?)_", # optional: AF images dont have A-
+            "filter"        : r"_D-([^_]+)"
             }
         
     else:
