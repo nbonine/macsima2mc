@@ -33,7 +33,10 @@ def main():
                                      out_folder=out_folder_name)
         # Save markers file in each output directory
         for path in output_dirs:
-            mc_tools.write_markers_file(path,args.remove_reference_marker)
+            mc_tools.write_markers_file(path,
+                                        args.remove_reference_marker,
+                                        ref_marker=ref, 
+                                        keep_background=args.keep_background)
 
     # Calculate and append ome metadata info contained in each file
     if (args.qc_metrics or args.only_qc_file) :

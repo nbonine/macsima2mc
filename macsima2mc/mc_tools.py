@@ -55,13 +55,15 @@ def get_patterns():
     return patterns
 
 
-def write_markers_file( data_path, rm_ref_marker,ref_marker='DAPI'):
+def write_markers_file( data_path, rm_ref_marker, ref_marker='DAPI', keep_background=False):
     """
     This function writes the markers.csv file.
     Args:
         data_path (Path): path to the folder containing the images.
         rm_ref_marker(Boolean): mark reference markers for removal except for the first one
         ref_marker (str): reference marker.
+        remove_background (Boolean): if True, all background channels are marked for removal. 
+                                     if False, all background channels are kept (except for DAPI/reference background).
     Returns:
         dict: dictionary with the columns of the markers.csv file.
     """
@@ -79,7 +81,11 @@ def write_markers_file( data_path, rm_ref_marker,ref_marker='DAPI'):
         ome = from_tiff(img)
 
         if background[0]=='B':
-            remove = len(markers)*['TRUE']
+            if keep_background:
+                remove = ['TRUE' if x == ref_marker else '' for x in markers] # Only DAPI/ref background is TRUE, others are empty
+            else:
+                remove = len(markers)*['TRUE'] # default: all background is TRUE
+            
             markers = ['bg_{c}_{m}-{f}'.format( c= f'{cycle_no[0]:03d}' , m=x , f=y ) for x,y in zip(markers,filters) ]
             fmt_background = len(markers)*['']
         else:

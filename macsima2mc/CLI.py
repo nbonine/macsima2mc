@@ -58,6 +58,11 @@ def get_args():
                         dont want to keep e.g. the DAPI images of the other cycles.'
                     )
     
+    parser.add_argument('--keep_background', '-kbg',
+                    action='store_true', 
+                    default=False,
+                    help='If set, background channels (other than DAPI/reference) will not be marked for removal in markers.csv')
+
     parser.add_argument('-qc',
                     '--qc_metrics',
                     action='store_true',
