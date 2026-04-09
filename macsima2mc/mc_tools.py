@@ -96,6 +96,9 @@ def write_markers_file( data_path, rm_ref_marker, ref_marker='DAPI', keep_backgr
                     fmt_background.append('')
                 else:
                     fmt_background.append(f'bg_{cycle_no[0]:03d}_{x}-{y}')
+        
+        if cycle_no[0] == 0:
+            fmt_background = len(markers) * [''] # don't use background if cycle is 0
 
         mks_file['cycle_number'].extend(len(markers)*cycle_no)
         mks_file['marker_name'].extend(markers)
