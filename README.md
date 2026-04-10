@@ -33,6 +33,7 @@ macsima2mc -h
 |-rr|boolean flag | --remove_reference_marker |mark the removal of the reference marker ,e.g. DAPI, for all cycles except the first one |FALSE|
 |-qc|boolean flag | --qc_metrics | measure features of contrast, intensity and sharpness of each tile in the cycle and appends them to a table |FALSE|
 |-wt|boolean flag | --write_table | writes a table with the acquisition parameters, metadata and,if enabled, qc metrics of each tile. Table will be saved in --output/cycle_info   |FALSE|
+|-kbg|boolean flag| --keep_background | If set, background channels (other than DAPI/reference) will not be marked for removal in markers.csv | FALSE |
 
 ## Installation
 ```bash
