@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "macsima2mc"
-version = "1.2.6"
+dynamic = ["version"]
 authors = [
-    {name = "Victor Perez", email = "hhabraxas@gmail.com"},
+    {name = "Victor Perez", email = "vdpm85@hotmail.com"},
     {name = "Miguel A. Ibarra-Arellano", email = "c180l058j@mozmail.com"}
 ]
 license = {text = "BSD-3-Clause"}
-description = "stages MACSima tiles for registration with ASHLAR in MCMICRO."
+description = "restructures MACSima raw .tif tiles into an .ome.tif stack ready to be used by ASHLAR in MCMICRO."
 readme = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3.12",
@@ -21,27 +21,36 @@ classifiers = [
 requires-python = ">=3.12"
 dependencies = [
     "ome-types==0.5.2",
-    "numpy",
-    "tifffile",
-    "pandas",
-    "beautifulsoup4",
-    "scikit-image",
-    "BaSiCPy"
+    "numpy==1.24.4",
+    "tifffile==2026.3.3",
+    "pandas==2.3.3",
+    "beautifulsoup4==4.14.3",
+    "scikit-image==0.26.0",
+    "BaSiCPy==2.0.0"
 ]
 keywords = [
     "mcmicro",
-    "multiplex imaging",
+    "multiplexed imaging",
     "proteomics",
     "macsima",
-    "staging"
+    "ashlar",
+    "illumination correction",
+    "ome.tiff"
 ]
 
-[tool.setuptools]
-packages = ["macsima2mc"]
-include-package-data = true
+[tool.setuptools.packages.find]
+where = ["src"]  
+
+#[tool.setuptools]
+#packages = ["macsima2mc"]
+#include-package-data = true
+
+[tool.setuptools.dynamic]
+version = { attr = "macsima2mc.version.__version__" }
+
 
 [project.scripts]
-macsima2mc = "macsima2mc.macsima2mc:main"
+macsima2mc = "macsima2mc.stage:main"
 
 [project.urls]
 Homepage = "https://github.com/SchapiroLabor/macsima2mc"
