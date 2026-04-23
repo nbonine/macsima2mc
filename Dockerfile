@@ -1,5 +1,5 @@
 # Use the official micromamba image as a base
-FROM mambaorg/micromamba:latest
+FROM mambaorg/micromamba:1.3.1
 LABEL maintainer="Victor Perez"
 
 # Set the base layer for micromamba
@@ -21,17 +21,19 @@ ARG MAMBA_ROOT_PREFIX=/opt/conda
 ENV PATH $MAMBA_ROOT_PREFIX/bin:$PATH
 
 # Install dependencies with micromamba, clean afterwards
-RUN micromamba env create -f environment.yml \
+RUN micromamba env create --name app-env -f environment.yml \
     && micromamba clean --all --yes
 
 # Add environment to PATH
-ENV PATH="/opt/conda/envs/staging_env/bin:$PATH"
+ENV PATH="/opt/conda/envs/app-env/bin:$PATH"
 
 # Set the working directory
-WORKDIR /staging
+WORKDIR /tool
 
 # Copy contents of the folder to the working directory
 COPY . .
+# Copy contents of the folder to the working directory
+RUN micromamba run --name app-env pip install .
 
 
 

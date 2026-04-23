@@ -35,19 +35,30 @@ macsima2mc -h
 |-wt|boolean flag | --write_table | writes a table with the acquisition parameters, metadata and,if enabled, qc metrics of each tile. Table will be saved in --output/cycle_info   |FALSE|
 
 ## Installation
-```bash
+### Windows
+BaSicPy is a dependency required by macsima2mc.  BaSicPy 2.0.0 requires pytorch, which is better handled by conda environments in Windows.  Thus, install first pytorch in a fresh conda environment and only afterards install macsima2mc:
+```
+conda create -n your_env  python=3.12
+conda activate your_env
+
+# Install PyTorch 2.11.0+cpu via pip (using the official PyTorch index)
+pip install torch==2.11.0+cpu --index-url https://download.pytorch.org/whl/cpu
+
+# Install your package
 pip install macsima2mc
 ```
 
 ## Container usage
-### download container:
+### download container via Docker or Singularity:
 - Docker
 ```
-docker pull ghcr.io/schapirolabor/macsima2mc:v1.2.15
+docker pull ghcr.io/schapirolabor/macsima2mc:v1.3.0
 ```
+or 
+
 - Singularity
 ```
-singularity pull docker://ghcr.io/schapirolabor/macsima2mc:v1.2.15
+singularity pull docker://ghcr.io/schapirolabor/macsima2mc:v1.3.0
 ```
 ### Script execution
 
