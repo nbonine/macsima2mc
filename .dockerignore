@@ -1,11 +1,7 @@
 .git
 .gitignore
-old
-LICENSE
 Dockerfile
-.git
 .github
 __pycache__
 *.pyc
-.gitignore
 .vscode
