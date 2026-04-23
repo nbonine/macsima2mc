@@ -1,39 +1,40 @@
-# Use the official micromamba image as a base
-FROM mambaorg/micromamba:1.3.1
+# Use official micromamba image
+FROM mambaorg/micromamba:2.5.0
 LABEL maintainer="Victor Perez"
 
-# Set the base layer for micromamba
 USER root
-COPY environment.yml .
+WORKDIR /app
 
-# Update package manager and install essential build tools
+# Update and install system dependencies (combined in one layer)
 RUN apt-get update -qq && apt-get install -y \
     build-essential \
     ffmpeg \
     libsm6 \
     libxext6 \
-    procps
+    procps \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set the environment variable for the root prefix
-ARG MAMBA_ROOT_PREFIX=/opt/conda
+# Copy environment.yml first for better caching
+COPY environment.yml .
 
-# Add /opt/conda/bin to the PATH
-ENV PATH $MAMBA_ROOT_PREFIX/bin:$PATH
-
-# Install dependencies with micromamba, clean afterwards
+# Install conda dependencies
 RUN micromamba env create --name app-env -f environment.yml \
     && micromamba clean --all --yes
 
 # Add environment to PATH
 ENV PATH="/opt/conda/envs/app-env/bin:$PATH"
 
-# Set the working directory
-WORKDIR /tool
+# Copy only necessary files for pip install (better caching)
+COPY pyproject.toml README.md requirements.txt ./
 
-# Copy contents of the folder to the working directory
-COPY . .
-# Copy contents of the folder to the working directory
-RUN micromamba run --name app-env pip install .
+# Install the package
+RUN micromamba run --name app-env pip install --no-cache-dir .
 
+# Copy the rest of the application (src directory)
+COPY src/ ./src/
+COPY LICENSE ./
 
+# Switch to non-root user
+USER $MAMBA_USER
 
