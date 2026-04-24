@@ -76,9 +76,8 @@ singularity pull docker://ghcr.io/schapirolabor/macsima2mc:v1.3.0
 
 ## Usage example
 The example below shows how to run the command macsima2mc via the singularity container in a bash script.
-The logic of execution and CLI usage is the same for a Docker container or after installation as pypi package.
+The logic of execution and CLI usage is the same for a Docker container or as pypi package.
 
-- Singularity
 ``` bash
 # Give the absolute path to the container file you pulled
 container_file=C:/MyLocalVolume/macsima2mc:v1.3.0.sif
@@ -95,8 +94,8 @@ do
 cycle_folder=$(basename "$cycle")
 # Execute macsima2mc with singularity using the container file (adapt accordingly if using docker or just the pip installation)
 singularity exec --bind $sample:/mnt,$output_dir:/media --no-home $container_file macsima2mc -i /mnt/$cycle_folder -o /media -ic
-#if docker: docker run -v $sample:/mnt -v $output_dir:/media $container_image macsima2mc -i /mnt/$cycle_folder -o /media -ic
-# If pip package:  macsima2mc -i $cycle -o $output_dir -ic
+#IF DOCKER : docker run -v $sample:/mnt -v $output_dir:/media $container_image macsima2mc -i /mnt/$cycle_folder -o /media -ic
+# IF PIP PACKAGE:  macsima2mc -i $cycle -o $output_dir -ic
 done
 ```
 
