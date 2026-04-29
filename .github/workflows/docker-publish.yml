@@ -4,14 +4,15 @@ name: Docker
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
+# A container will be automatically created when pushes are done on the dev branch
+# A container will also be created when a package is published (select manually the main branch for that)
 
-on: #[push]
-    release: 
-        types: published
-    #pull_request:
-    #    branches: ["main"]
+on:
+  push:
+    branches: ["main"]
+  release:
+    types: [published]
     
-        
 #  schedule:
 #    - cron: '1 * * * *'
 #  push:

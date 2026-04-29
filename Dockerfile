@@ -1,7 +1,18 @@
-FROM mambaorg/micromamba:latest
-COPY --chown=$MAMBA_USER:$MAMBA_USER environment.yml /tmp/env.yaml
-RUN micromamba install -y -n base -f /tmp/env.yaml && \
-    micromamba clean --all --yes
-ENV PATH="${PATH}:/opt/conda/bin"
-WORKDIR /staging
+FROM python:3.12-slim
+LABEL maintainer="Victor Perez"
+
+WORKDIR /tool
+
+#working without these lines, they were just added for nf-core compliance. 
+
+RUN apt-get update -qq && apt-get install -y \
+    build-essential \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    procps \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY . .
+RUN pip install --no-cache-dir .

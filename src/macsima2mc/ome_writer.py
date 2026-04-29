@@ -1,5 +1,6 @@
-import macsima2mc.ome_schema as schema
 import pandas as pd
+#local libraries
+from . import ome_schema as schema
 
 
 def create_ome(tile_info,

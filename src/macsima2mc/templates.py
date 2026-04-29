@@ -53,7 +53,7 @@ def macsima_pattern(version=1):
             "well"          : r"_W-(.*?\d+)",
             "roi"           : r"_ROI-(\d+)",
             "tile"          : r"_F-(\d+)",
-            "exposure_time" : r"_EXP-([\d\.]+)",
+            "exposure_time" : r"_EXP-(\d+(?:\.\d+)?)",
             "marker"        : r"_A-(.*?)(?=_C-)", 
             "filter"        : r"_D-([^_]+)"
             }

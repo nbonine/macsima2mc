@@ -54,11 +54,9 @@ def apply_corr(uncorr_stack,no_of_channels):
     for ind_list in indices:
         uncorr_imgs = extract_channel_imgs(uncorr_stack, ind_list)
         imgs_for_ffp=filter_out_blanks(uncorr_imgs)
-        #basic.fit(uncorr_imgs)
         basic.fit(imgs_for_ffp)
         ffp = basic.flatfield
         corr_stack[ind_list,:,:] = np.uint16(np.clip(uncorr_imgs.astype(float) / ffp, 0, 65535))
-
     return corr_stack
 
 

@@ -1,13 +1,15 @@
-from macsima2mc.templates import info_dic
+
 import re
 import pandas as pd
 import tifffile as tifff
 from bs4 import BeautifulSoup
 import numpy as np
 from pathlib import Path
-import macsima2mc.ome_writer as ome_writer
-import macsima2mc.exceptions as expt
-import macsima2mc.illumination_corr as illumination_corr
+# local libraries
+from .templates import info_dic
+from . import ome_writer
+from . import exceptions as expt
+from . import illumination_corr
 
 
 def merge_dicts(list_of_dicts):
@@ -192,8 +194,8 @@ def cast_stack_name(cycle_no,
     Returns:
         str: name of the stack file.
     """
-    markers='__'.join([element[0] for element in marker_filter_map ])
-    filters='__'.join([element[1] for element in marker_filter_map ])
+    markers='__'.join([element[0].replace("_","-") for element in marker_filter_map ])
+    filters='__'.join([element[1].replace("_","-") for element in marker_filter_map ])
     cycle_no = int(cycle_no)
 
     c = f'{cycle_no:03d}'
@@ -344,7 +346,6 @@ def create_stack(cycle_info_df,
     acq_group = cycle_info_df.groupby(dimensions)
     acq_index = list( acq_group.indices.keys() )
     expt_matrix_roi=expt.at_roi(acq_group,dimensions,ref_marker).groupby(dimensions)#exceptions matrix
-
     if hi_exp:
         exp_level_index=np.argwhere( np.asarray(dimensions)=='exposure_level' ).flatten()[0]
         acq_index = select_by_exposure(acq_index,exp_level_index,target='max')
@@ -389,7 +390,7 @@ def create_stack(cycle_info_df,
 
 
         stack_name = cast_stack_name(frame.cycle.iloc[0], index, conformed_markers)
-
+        
         if ill_corr:
             tag = 'corr_'
             no_of_channels = len(conformed_markers)
