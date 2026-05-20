@@ -50,7 +50,7 @@ def get_patterns():
         'cycle_number': (r"cycle-(.*?)-", True),
         'marker_name' : (r"markers-(.*?)-filters",False),
         'Filter'      : (r"-filters-(.*?).ome",False),
-        'background'  : (r"-src-(.*?)-" ,False)
+        'background'  : (r"-src-\d*-?([A-Z]+)-", False)
         }
 
     return patterns

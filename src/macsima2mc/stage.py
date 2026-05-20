@@ -112,6 +112,7 @@ def main():
     ref = args.reference_marker
     basicpy_corr = args.illumination_correction
     out_folder_name = args.output_subdir
+    keep_background = args.keep_background
 
     # Extract acquisition info of the cycle from file name,e.g. rack,well,markers,filters, etc.
     cycle_info = tools.cycle_info(input, macsima_pattern(version=2), ref_marker= ref)
@@ -132,7 +133,7 @@ def main():
                                      out_folder=out_folder_name)
         # Save markers file in each output directory
         for path in output_dirs:
-            mc_tools.write_markers_file(path,args.remove_reference_marker)
+            mc_tools.write_markers_file(data_path=path, rm_ref_marker=args.remove_reference_marker, ref_marker=ref, keep_background=keep_background)
 
     # Calculate and append ome metadata info contained in each file
     if (args.qc_metrics or args.only_qc_file) :

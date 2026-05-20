@@ -199,6 +199,8 @@ def cast_stack_name(cycle_no,
 
     c = f'{cycle_no:03d}'
     s = acq_group_index[0]
+    source_order = {'AF': '0-AF', 'S': '1-S', 'B': '2-B'} #Rename source so alphabetical sort (in ASHLAR) puts signal before background
+    s = source_order.get(s, s) 
     e = acq_group_index[4]
     r = acq_group_index[1]
     w = acq_group_index[2]
